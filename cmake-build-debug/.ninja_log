@@ -1,0 +1,22 @@
+# ninja log v6
+2	273	7859692156047830	build.ninja	48370fc197436478
+18	434	7859671040137284	CMakeFiles/untitled3.dir/sus_classes.cpp.obj	4b045c0d2807ed47
+24	471	7859672598479064	CMakeFiles/untitled3.dir/main.cpp.obj	af596eb45b6e7941
+22	645	7859692156047830	build.ninja	48370fc197436478
+24	919	7859692157055110	CMakeFiles/untitled3.dir/sus_classes.cpp.obj	5fcfb414e33e7744
+22	477	7859693196006122	CMakeFiles/untitled3.dir/main.cpp.obj	b2624169f807500d
+19	605	7859694854444872	CMakeFiles/untitled3.dir/game3h.cpp.obj	e013b53ad319f478
+21	595	7859695011282952	CMakeFiles/untitled3.dir/game10h.cpp.obj	484af62bdcb2bf9
+596	957	7859695017027629	untitled3.exe	c6d178ee37a28cfa
+5	509	7859730002153914	CMakeFiles/untitled3.dir/main.cpp.obj	b2624169f807500d
+510	930	7859730007193376	untitled3.exe	c6d178ee37a28cfa
+22	603	7859734216376728	CMakeFiles/untitled3.dir/game3h.cpp.obj	e013b53ad319f478
+604	766	7859734222196704	untitled3.exe	c6d178ee37a28cfa
+5	553	7859745609896834	CMakeFiles/untitled3.dir/main.cpp.obj	b2624169f807500d
+10	710	7859745609953367	CMakeFiles/untitled3.dir/sus_classes.cpp.obj	5fcfb414e33e7744
+14	721	7859745609991334	CMakeFiles/untitled3.dir/game3h.cpp.obj	e013b53ad319f478
+18	765	7859745610026249	CMakeFiles/untitled3.dir/game10h.cpp.obj	484af62bdcb2bf9
+765	942	7859745617497151	untitled3.exe	c6d178ee37a28cfa
+5	454	7859748218087300	CMakeFiles/untitled3.dir/main.cpp.obj	b2624169f807500d
+10	603	7859748218133737	CMakeFiles/untitled3.dir/game3h.cpp.obj	e013b53ad319f478
+603	763	7859748224060874	untitled3.exe	c6d178ee37a28cfa
