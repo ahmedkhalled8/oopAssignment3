@@ -1,146 +1,129 @@
+
+
 #include <iostream>
-#include "boardgameclass.h"
-#include "game 11.h"
-#include "game 7.h"
-#include "game 5.h"
-#include "numericalclass.h"
-#include "SUSClass.h"
+#include <vector>
+#include <string>
+#include <functional>
+#include <limits>
+#include <ctime>
+
+
+#include "BoardGame_Classes.h"
+#include "Numerical.h"
+#include "Misere.h"
+#include "Tic5x5.h"
+#include "SUS.h"
+#include "FourInARow.h"
+#include "Tic4x4.h"
+#include "Obstacles.h"
+#include "InfinityGame11.h"
+#include "memoryTicTacToe.h"
+#include "pyramid.h"
+#include "UltimateTicTacToe.h"
+#include "Word_TicTacToe.h"
+#include "diamond.h"
 
 using namespace std;
 
-// Simple placeholder UI classes for Game7 and Game5
-class Game7UI {
-public:
-    Player<char>** setup_players() {
-        Player<char>** players = new Player<char>*[2];
-        string n1, n2;
-        cout << "Enter Player 1 (X) name: "; cin >> n1;
-        cout << "Enter Player 2 (O) name: "; cin >> n2;
-        players[0] = new Player<char>(n1, 'X', PlayerType::HUMAN);
-        players[1] = new Player<char>(n2, 'O', PlayerType::HUMAN);
-        return players;
-    }
 
-    void display_board_matrix(const vector<vector<char>>& matrix) const {}
-    Move<char>* get_move(Player<char>* p) { return nullptr; }
+void clearScreen() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
+void pauseConsole() {
+    cout << "\nPress Enter to return to the Arcade Menu...";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();
+}
+
+
+int getValidInt(int min, int max) {
+    int choice;
+    while (true) {
+        if (cin >> choice) {
+            if (choice >= min && choice <= max) return choice;
+            cout << " > Out of range. Please enter (" << min << "-" << max << "): ";
+        } else {
+            cout << " > Invalid input. Numbers only: ";
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+    }
+}
+
+
+
+
+// incomplete
+void launchDiamond()  { cout << "\nStarting Diamond Tic-Tac-Toe...\n";  }
+
+
+
+
+
+struct GameEntry {
+    string name;
+    void (*startFunction)(); // Function pointer
 };
 
-class Game5UI {
-public:
-    Player<char>** setup_players() {
-        Player<char>** players = new Player<char>*[2];
-        string n1, n2;
-        cout << "Enter Player 1 (X) name: "; cin >> n1;
-        cout << "Enter Player 2 (O) name: "; cin >> n2;
-        players[0] = new Player<char>(n1, 'X', PlayerType::HUMAN);
-        players[1] = new Player<char>(n2, 'O', PlayerType::HUMAN);
-        return players;
-    }
-
-    void display_board_matrix(const vector<vector<char>>& matrix) const {}
-    Move<char>* get_move(Player<char>* p) { return nullptr; }
-};
-
-class SUSUI {
-public:
-    Player<char>** setup_players() {
-        Player<char>** players = new Player<char>*[2];
-        string n1, n2;
-        cout << "Enter Player 1 (X) name: "; cin >> n1;
-        cout << "Enter Player 2 (O) name: "; cin >> n2;
-        players[0] = new Player<char>(n1, 'X', PlayerType::HUMAN);
-        players[1] = new Player<char>(n2, 'O', PlayerType::HUMAN);
-        return players;
-    }
-
-    Move<char>* get_move(Player<char>* p) { return nullptr; }
-    void display_board_matrix(const vector<vector<char>>& matrix) const {}
-};
+void showWelcomeBanner() {
+    cout << "#############################################\n";
+    cout << "#           THE  G A M E   A R E N A        #\n";
+    cout << "#############################################\n";
+    cout << "#  Select a challenge from the list below   #\n";
+    cout << "#############################################\n\n";
+}
 
 int main() {
-    int choice;
 
-    while (true) {
-        cout << "\n============== GAME MENU ==============\n";
-        cout << "1. Play Game 11\n";
-        cout << "2. Play Game 7\n";
-        cout << "3. Play Game 5\n";
-        cout << "4. Play SUS Game\n";
-        cout << "5. Play Numerical Tic-Tac-Toe\n";
-        cout << "6. Exit\n";
-        cout << "=======================================\n";
-        cout << "Enter your choice: ";
-        cin >> choice;
+    vector<GameEntry> arcade = {
+        {"SUS Game",                launchSUS},
+        {"Connect 4",               launchConnect4},
+        {"5x5 Tic-Tac-Toe",         launchTicTacToe5x5},
+        {"Word Tic-Tac-Toe",        launchWordTTT},
+        {"Misere Tic-Tac-Toe",      launchMisere},
+        {"Diamond Tic-Tac-Toe",     launchDiamond},
+        {"4x4 Moving Tic-Tac-Toe",  launchMovingTTT},
+        {"Pyramid Tic-Tac-Toe",     launchPyramid},
+        {"Numerical Tic-Tac-Toe",   launchNumerical},
+        {"Obstacles (6x6)",         launchObstacles},
+        {"Infinity Tic-Tac-Toe",    launchInfinity},
+        {"Ultimate Tic-Tac-Toe",    launchUltimate},
+        {"Memory Tic-Tac-Toe",      launchMemory},
+        {"Diamond Tic-Tac-Toe",     launchDiamondTTT}
+    };
 
-        switch (choice) {
+    bool appRunning = true;
+    while (appRunning) {
+        clearScreen();
+        showWelcomeBanner();
 
-        case 1: {
-            InfinityBoard* board = new InfinityBoard();
-            Game11UI* ui = new Game11UI();
-            auto players = ui->setup_players();
-            GameManager<char> game(board, players, ui);
-            game.run();
-
-            for (int i = 0; i < 2; i++) delete players[i];
-            delete[] players;
-            delete board;
-            delete ui;
-            break;
+     
+        for (size_t i = 0; i < arcade.size(); ++i) {
+            
+            cout << " [" << (i + 1) << "] " << arcade[i].name << endl;
         }
-        case 2: {
-            FourByFourBoard* board = new FourByFourBoard();
-            Game7UI* ui = new Game7UI();
-            auto players = ui->setup_players();
-            // Note: you may need a custom game loop for Game7
-            delete[] players;
-            delete board;
-            delete ui;
-            break;
-        }
+        cout << " [0] Exit Application\n";
+        cout << "\nChoose your game > ";
 
-        case 3: {
-            MisereBoard* board = new MisereBoard();
-            Game5UI* ui = new Game5UI();
-            auto players = ui->setup_players();
-            // Note: you may need a custom game loop for Game5
-            delete[] players;
-            delete board;
-            delete ui;
-            break;
-        }
+       
+        int choice = getValidInt(0, arcade.size());
 
-        case 4: {
-            SUSBoard* board = new SUSBoard();
-            SUSUI* ui = new SUSUI();
-            auto players = ui->setup_players();
-            // Note: you may need a custom game loop for SUS
-            delete[] players;
-            delete board;
-            delete ui;
-            break;
-        }
-
-        case 5: {
-            NumericalBoard* board = new NumericalBoard();
-            NumericalUI* ui = new NumericalUI();
-            auto players = ui->setup_players();
-            GameManager<int> game(board, players, ui);
-            game.run();
-
-            for (int i = 0; i < 2; i++) delete players[i];
-            delete[] players;
-            delete board;
-            delete ui;
-            break;
-        }
-
-        case 6:
-            cout << "Goodbye!\n";
-            return 0;
-
-        default:
-            cout << "Invalid choice.\n";
+        if (choice == 0) {
+            appRunning = false;
+            cout << "\nExiting... See you next time!\n";
+        } else {
+            
+            clearScreen();
+            arcade[choice - 1].startFunction(); 
+        
+            pauseConsole();
         }
     }
+
     return 0;
 }
